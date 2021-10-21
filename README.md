@@ -1,11 +1,11 @@
 # R/RStudio・統計基礎・data analysis
 
-### **<u>統計学の基礎知識</u>**
+### <u>統計学の基礎知識</u>
   - 記述統計
   - 推測統計
   - 相関係数・回帰分析(線形・重回帰)
 
-### **<u>R言語 or RStudio</u>**
+### <u>R言語 or RStudio</u>
   - R言語 基礎・記述
     - data型, vector, list, function...
 
@@ -21,7 +21,7 @@
     - {lubridate} 時間処理
     - NA処理
 
-### **<u>Data analysis・RStudioの全体像</u>**
+### <u>Data analysis・RStudioの全体像</u>
 
   - Dataの用意
     - ファイル読み込み / エンコーディング / サンプリングデータ生成…
