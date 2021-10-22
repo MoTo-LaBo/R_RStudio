@@ -31,7 +31,7 @@ vec_season_factor =
   factor(vec_season_chr)
 
 #### Data Frame ####
-df = 
+df =
     tibble(
     season = vec_season_chr,
     avg_temp = c(22, 30, 18, 9)
@@ -88,28 +88,3 @@ df_rev %>%
 typeof(TRUE)
 
 typeof(FALSE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

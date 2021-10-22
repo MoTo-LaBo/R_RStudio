@@ -43,3 +43,38 @@
 - 普通の削除だと　`image has dependent child images`　と error message が出るので上記の command　で削除する
 
     - ※ (イメージには依存する子イメージがある)
+
+## Global Options の設定
+  - **Tools　>　Global Options**　で　RStudioのさまざまな設定を行う
+    - 実際にやっておかないと本当に困る項目だけを記述
+
+  - **General**
+    - Save workspace to .RData on exit　のチェック外す
+    - `「Never」`　とする　>　自動で余計なものが読み込まれなくなる
+
+  - **Code**
+    - Savingタブは　`Default text encoding`　を　`UTF-8`
+
+  - **Packages**
+    - `CRAN Mirror`　を　`Japan（Tokyo）[https]`　にする
+
+## .Rprofile 作成
+    例)
+    library(package名)
+    library(tidyverse)
+
+- Rprofile を作成する事により一番最初に自動で package を読み込んでくれる
+
+
+
+
+
+
+
+
+
+
+
+
+
+
