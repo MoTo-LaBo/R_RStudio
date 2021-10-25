@@ -8,4 +8,4 @@ library(lubridate)
 theme_set(theme_linedraw(base_size = 25, base_family = "Helvetica"))
 
 # script file 読み込み
-source("./script/my_function.R", encoding = "utf8")
+# source("./script/my_function.R", encoding = "utf8")
