@@ -22,8 +22,6 @@ result_7 =
 # .png で保存
 ggsave(
   "exercise7/03_output/result_7.png",
-  result_7,
-  width = 12,
-  height = 6
+  result_7
 )
 

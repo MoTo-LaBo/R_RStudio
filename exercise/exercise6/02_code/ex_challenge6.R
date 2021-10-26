@@ -116,7 +116,7 @@ df_fig$hist %>% wrap_plots(nrow = 3)
 ggsave(
   "exercise6/03_output/result_6.png",
   result_6,
-  width = 12,
-  height = 5
+  width = 5,
+  height = 3
 )
 
