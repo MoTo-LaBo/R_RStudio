@@ -256,7 +256,7 @@ getwd()
 
 ggsave(
   plot = hist,
-  filename = "02_data_overview/hist.png",
+  filename = "03_graph/hist.png",
   height = 5,
   width = 7,
   units = "cm"
@@ -264,7 +264,7 @@ ggsave(
 
 ggsave(
   plot = g_hist,
-  filename = "02_data_overview/hist_g.png",
+  filename = "03_graph/hist_g.png",
   height = 5,
   width = 10,
   units = "cm"
@@ -272,7 +272,7 @@ ggsave(
 
 ggsave(
   plot = scatter,
-  filename = "02_data_overview/scatter.png",
+  filename = "03_graph/scatter.png",
   height = 5,
   width = 7,
   units = "cm"
@@ -280,7 +280,7 @@ ggsave(
 
 ggsave(
   plot = g_scatter,
-  filename = "02_data_overview/scatter_g.png",
+  filename = "03_graph/scatter_g.png",
   height = 6,
   width = 10,
   units = "cm"
@@ -288,7 +288,7 @@ ggsave(
 
 ggsave(
   plot = box_plot,
-  filename = "02_data_overview/box_plot.png",
+  filename = "03_graph/box_plot.png",
   height = 5,
   width = 7,
   units = "cm"
@@ -296,7 +296,7 @@ ggsave(
 
 ggsave(
   plot = g_box_plot,
-  filename = "02_data_overview/box_plot_g.png",
+  filename = "03_graph/box_plot_g.png",
   height = 5,
   width = 10,
   units = "cm"
