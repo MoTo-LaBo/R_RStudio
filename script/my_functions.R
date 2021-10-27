@@ -8,6 +8,7 @@
 #  "exercise2/01_input/df_clean.rds"
 #)
 
+
 #### scatter : 散布図作成 ####
 make_scatter = function(df, type){
   df_Species =
