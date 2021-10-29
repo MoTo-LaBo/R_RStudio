@@ -59,4 +59,4 @@ po/*~
 .vscode
 .DS_Store
 *.yaml
-.html
+*.nb.html
