@@ -1,0 +1,92 @@
+---
+title: "Exercise"
+output: html_notebook
+---
+
+<center>
+<h4>プロ野球選手の成績を　<b>偏差値</b>　を使って比較</h4>
+</center>
+
+1. data を読み込む
+
+    - **csv 自体でも内容を確認**
+
+2. histograme で確認
+  
+    - **色々階級を変えて確認**
+
+3. 偏差値を求める
+
+    - **scale を使って標準化**
+
+#### csv file 読み込み
+- working dirctory 確認
+```{r}
+getwd()
+data <- read_csv("data01_mac.csv", locale = locale(encoding = "utf8"))
+data
+```
+#### histograme で確認
+- まずは histograme で確認
+```{r}
+hist(data$打率)
+```
+#### 階級の幅を変えて表示する
+- 色々と印象が変わってくる
+```{r, eval=FALSE, dev='ragg_png'}
+hist(data$打率, breaks = seq(0.2, 0.34, 0.01))
+```
+#### 偏差値を確認
+- **標準化**
+  - data の　**平均値を 0 , 分散を 1**　に変換する操作　=　標準化して値の **scale** を整える
+
+$$
+\frac{X - \mu}{\sigma}
+$$
+$$
+標準化　=　\frac{値 - 平均値}{標準偏差}
+$$
+<center>
+標準 : <font color = "red">0</font>　標準偏差 : <font color = "red">1</font> になる
+</center>
+```{r}
+scale(data$打率)
+```
+#### 偏差値を出す
+- 打率の偏差値　=　標準化の値　$\times$　10 + 50
+```{r}
+scale(data$打率) * 10 + 50
+```
+#### それぞれの偏差値を算出
+```{r}
+array1 = matrix(0, 51, 5)
+array1
+```
+#### 計算結果を入れていく
+- columns に代入 **[行, 列]**
+```{r}
+array1[,1] = scale(data$打率) * 10 + 50
+array1[,2] = scale(data$本塁打) * 10 + 50
+array1[,3] = scale(data$打点) * 10 + 50
+array1[,4] = scale(data$盗塁) * 10 + 50
+array1[,5] = scale(data$出塁率) * 10 + 50
+
+array1
+```
+#### 各選手の情報を取得
+- index で行を指定して取得
+```{r}
+round(array1[1,])
+```
+- 偏差値に落とし込むことによって各種を比較できる
+
+
+|打率|本塁打|打点|盗塁|出塁率|
+|-|-|-|-|-|
+|`r round(array1[1, 1])`|`r round(array1[1, 2])`|`r round(array1[1, 3])`|`r round(array1[1, 4])`|`r round(array1[1, 5])`|
+
+
+
+
+
+
