@@ -1,0 +1,414 @@
+---
+title: "推測統計(点,区間)"
+output:
+  html_notebook: default
+---
+
+#### inferential statistics
+
+### 推測統計
+　少ない data から大きな集団の特徴を掴む
+
+<center>
+<br>
+<h4><b>母集団</b>と<b>標本</b>と<b>サンプリング</b>
+<br>
+<br>
+↓
+<br>
+<br>
+<b>推定・検定</b></h4>
+</center>
+
+### 母集団と標本
+- **母集団**　→　情報を得たい対象全体
+　
+- **標本**　→　母集団の一部
+
+<center>
+<br>
+<u>標本抽出のサンプリング</u>
+<br>
+<br>
+</center>
+|**母集団**|**標本**|
+|-|-|
+|母平均 :　$\mu$|標本平均 :　$\overline{X}$|
+|母分散 :　$\sigma^2$|標本分散 :　$s^2$|
+|母標準偏差 :　$\sigma$|標本標準偏差 :　$s$|
+
+- 母集団の平均, 分散, 標準偏差はわからない
+  
+  - 全てのdataが手元にない為　→　<font color = "red">求められない値</font>
+    
+  
+- 標本の平均, 分散, 標準偏差は分かる
+  
+  - 手元にある data
+<center>
+<br>
+<h4>↓</h4>
+<br>
+</center>
+
+|推定・点推定・区間推定を予測|
+|:-:|
+|推定母平均 :　$\hat\mu$|
+|推定母分散 :　$\hat\sigma^2$|
+|推定母標準偏差 :　$\hat\sigma$|
+
+  - 標本から仮説が正しいかを判断
+  
+    - **仮説検定**
+
+```{r}
+n <- 10000
+m <- 170
+s <- 5.5
+
+# 乱数発生させる : 1万人の男性の身長
+p <- rnorm(n, mean = m, sd = s)
+head(p, 50)
+```
+```{r}
+hist(p)
+```
+#### 母集団から random に data を抽出
+- 100個の data を取得
+```{r}
+x <- sample(p, 100)
+x
+hist(x)
+mean(x)
+sd(x)
+```
+|<center><h4>x の data の値</h4></center>|
+|:-:|
+|**平均** : `r mean(x)`<br>**標準偏差** : `r sd(x)`|
+
+***
+
+## 点推定
+　母集団の平均, 分散, 標準偏差を **ピンポイント** で推定
+
+
+- **母集団**　->　全国の中学生test
+
+- **標本**　->　82, 35, 69 点(3人の data)
+  
+|全国|標本|
+|:-:|:-:|
+|母平均 :　$\mu$|標本平均 :　$\overline{X}$|
+|母分散 :　$\sigma^2$|標本分散 :　$s^2$|
+|母標準偏差 :　$\sigma$|標本標準偏差 :　$s$|
+
+#### 計算
+$$
+\begin{aligned}
+\overline{X} &　=　\frac{82 - 35 - 69}{3} \\
+&　=　62 \\
+\\
+s^2 &　=　\frac{(82-62)^2 + (35-62)^2 + (69-62)^2}{\underbrace{2}_{sample数 - 1(不偏分散)}} \\
+&　=　589 \\
+\\
+s &　=　\sqrt{589}　\simeq　24.3
+\end{aligned}
+$$
+<center>
+<br>
+別の標本や sample数が変わると推定した値も変わるのでは...
+<br>
+<br>
+↓
+<br>
+<br>
+<h4><b>区間推定</b></h4>
+</center>
+
+#### 分散と不偏分散の違い
+- 平均を求める　<font color = "red">分母の値</font>　が異なる　->　<font color = "red">**sample数　- 1**</font>
+
+  - **不偏分散の特徴**
+  
+    - **母分散の期待値**　と一致する　->　少数 sample から正確に推定
+    
+    - <font color = "blue">data 数が多い時は変わらない</font>
+
+
+#### 乱数生成
+- **sample数** : `r as.integer(n1)`　|　**平均値** : `r m1`　|　**標準偏差** : `r s1`
+```{r}
+n1 <- 3000000
+m1 <- 70
+s1 <- 10
+
+d1 <- rnorm(n1, mean = m1, sd = s1)
+d1 = ifelse(d1 >= 100, 100, d1)
+head(d1, 50)
+```
+```{r}
+hist(d1)
+x1 <- sample(d1, 3)
+x1
+```
+#### 母集団から sample　３つ取得
+- `r x1[1]`
+
+- `r x1[2]`
+
+- `r x1[3]`
+```{r}
+mean(x1)
+```
+- **平均** : `r mean(x1)`
+```{r}
+sd(x1)
+```
+- **標準偏差** : `r sd(x1)`
+```{r}
+var(x1)
+```
+- **不偏分散** : `r var(x1)`
+```{r}
+sum((x1-mean(x1))**2)/3
+```
+
+- **分散** : `r sum((x1-mean(x1))**2)/3`
+
+***
+
+## 区間推定
+　母集団から sample を 1つとる場合
+
+  - どれくらいの　**確率**　でどれくらいの　**範囲**　に現れるか？
+
+#### 公式
+$$
+-1.96 \leq \frac{X - \mu}{\sigma} \leq 1.96 \\
+\\
+-1.96\sigma + \mu \leq X \leq 1.96\sigma + \mu
+$$
+
+- 母集団から　**95%の確率** で
+
+  - $-1.96\sigma + \mu \leq X \leq 1.96\sigma + \mu$　の範囲の data が sample される
+
+```{r}
+n1 <- 3000000
+m1 <- 70
+s1 <- 10
+
+d1 <- rnorm(n1, mean = m1, sd = s1)
+d1 = ifelse(d1 >= 100, 100, d1)
+head(d1, 50)
+hist(d1)
+```
+#### 区間推定
+  - 95%の確率で信頼区間の数値が取得される
+
+$$
+-1.96\sigma + \mu \leq X \leq 1.96\sigma + \mu
+$$
+
+- **sample数** : `r as.integer(n1)`
+- **母平均** : 　`r m1`
+- **標準偏差** : `r s1`
+```{r}
+sp <- sample(d1, 1)
+sp
+
+r1 <- sp - 1.96*s1
+r2 <- sp + 1.96*s1
+c(r1, r2)
+```
+- **母平均** : 　　　　　　`r m1`
+- **標本(sample)** : 　　　`r sp`
+- **信頼区間(95%)** :　　　`r r1` ~ `r r2`
+
+<center>
+<br>
+母平均から信頼区間を求める<br>
+<br>
+↓<br>
+<br>
+<b>妥当であるか? or 不適当?</b><br>
+<br>
+||<br>
+<br>
+どれだけ data が正確であるかを <b><font color = "red">確率 & 範囲</font></b> で判断できる
+</center>
+
+***
+
+## 母平均と標本平均
+　標本の統計量の分布を　**標本分布**　->　今は **標本平均の標本分布**
+
+  - 標本平均の平均 : $$\mu$$
+  - 標本平均の標準偏差 : $$\frac{\sigma}{\sqrt{n}}$$
+
+#### 標準化を行う
+$$
+標準化　=　\frac{\overline{X} - \mu}{\frac{\sigma}{\sqrt{n}}}
+$$
+
+#### 推定区間 
+- sample 数が 1 -> n数個　へと大きくなると推定区間が変わる
+$$
+-1.96 \leq \frac{\overline{X} - \mu}{\frac{\sigma}{\sqrt{n}}} \leq 1.96 \\
+\\
+-1.96\frac{\sigma}{\sqrt{n}} + \overline{X} \leq \mu \leq 1.96\frac{\sigma}{\sqrt{n}} + \overline{X}
+$$
+<center>
+<br>
+sample 数が 1 の時より<br>
+<br>
+↓<br>
+<br>
+標本平均の標準偏差が n が増えるごとに　<b>小さくなる</b><br>
+<br>
+||<br>
+<br>
+<b><font color = "red">信頼区間が狭くなる</font></b>
+</center>
+
+#### 区間推定を行う
+- **sample数** : `r as.integer(n1)`
+- **母平均** : 　`r m1`
+- **標準偏差** : `r s1`
+```{r}
+nn1 <- 1
+nn2 <- 15
+
+sp1 <- sample(d1, nn1)
+sp1
+sp2 <- sample(d1, nn2)
+sp2
+```
+
+- **標本平均の平均** : $$\mu$$ = `r mean(sp2)`
+```{r}
+sp2m = mean(sp2)
+sp2m
+```
+#### 公式
+$$
+-1.96\frac{\sigma}{\sqrt{n}} + \overline{X} \leq \mu \leq 1.96\frac{\sigma}{\sqrt{n}} + \overline{X}
+$$
+
+#### sample数 1個
+- **信頼区間(95%)** :　　`r rl1` ~ `r ru1`
+- **区間の長さ** :　　　`r ru1 - rl1`
+
+```{r}
+rl1 <- sp1 - 1.96*(s1/sqrt(nn1))
+ru1 <- sp1 + 1.96*(s1/sqrt(nn1))
+c(rl1, ru1, ru1 - rl1)
+```
+#### sample数 15個
+- **信頼区間(95%)** :　`r rl2` ~ `r ru2`
+- **区間の長さ** :　　　`r ru2 - rl2`
+```{r}
+rl2 <- sp2m - 1.96*(s1/sqrt(nn2))
+ru2 <- sp2m + 1.96*(s1/sqrt(nn2))
+c(rl2, ru2, ru2 - rl2)
+```
+***
+
+## 区間推定とsample数
+　全国中学生testの結果から標本を抽出。標本から得られる値から母集団を推定する
+
+|**母集団**|
+|:-:|
+|母平均 :　$\mu$<br>母標準偏差 :　$\sigma$|
+
+|**標本**|**値**|
+|:-:|:-|
+|標本平均 :　$\overline{X}$|70点|
+|標本標準偏差 :　$s$|10点|
+|標本数 :　$n$|400|
+
+#### 母平均の区間推定
+- 標本平均 :　$\overline{X}$:　70点
+
+- 標本標準偏差 :　$s$ :　10点
+
+- 標本数 :　$n$ :　400
+
+<center>
+<br>
+1. 母集団の何が知りたいのか?　＝　<b>母平均</b><br>
+<br>
+↓<br>
+</center>
+$$
+-1.96 \leq \frac{\overline{X} - \mu}{\frac{\sigma}{\sqrt{n}}} \leq 1.96
+$$
+<center>
+<br>
+2. <b><font color = "red">標本平均の標本分布　＝　正規分布</font></b><br>
+<br>
+↓<br>
+</center>
+$$
+-1.96\frac{\sigma}{\sqrt{n}} + \overline{X} \leq \mu \leq 1.96\frac{\sigma}{\sqrt{n}} + \overline{X}
+$$
+<center>
+<br>
+<b>実際は母標準偏差を手に入れることはできない...ので</b><br>
+<br>
+||<br>
+<br>
+sample数が多い場合は <b><font color = "red">標本標準偏差</font></b> を近似値として使用<br>
+<br>
+↓
+</center>
+$$
+70 - 1.96\frac{10}{\sqrt{400}} \leq \mu \leq 70 + 1.96\frac{10}{\sqrt{400}} \\
+$$
+$$
+\\
+69.02 \leq \mu \leq 70.98
+$$
+<center>
+<br>
+3. どれくらいの正確さ?　＝　<b>95%</b><br>
+<br>
+||<br>
+<br>
+母平均　=　<b><font color = "red">69.02 ~ 70.98</font></b>
+</center>
+
+```{r}
+n3 <- 400
+x3 <- rnorm(n3, mean = 70, sd = 10)
+```
+- **標本平均** : `r x3m`点
+```{r}
+x3m <- mean(x3)
+x3m
+```
+- **標本標準偏差** : `r x3sd`
+```{r}
+x3sd = sd(x3)
+```
+- **区間推定**
+  
+  - **下限値** : `r rlx3`
+
+  - **上限値** : `r rux3`
+```{r}
+rlx3 <- x3m - 1.96*(x3sd/sqrt(n3))
+rux3 <- x3m + 1.96*(x3sd/sqrt(n3))
+c(rlx3, rux3)
+```
+
+
+
+
+
+
+
+
+
+
+
